@@ -1,53 +1,22 @@
 <template>
-  <div>{{ state.books }}</div>
+  <div class="books">
+    <div class="book" v-for="book in state.books" :key="book.id">
+      <BookItem :book="book" />
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 import axios from 'axios';
 import { onBeforeMount, reactive } from 'vue';
 import API_KEY from '../../assets/api.key';
-
-interface Volume {
-  allowAnonLogging: boolean;
-  authors: string[];
-  canonicalVolumeLink: string;
-  categories: string[];
-  contentVersion: string;
-  description: string;
-  imageLinks: {
-    smallThumbnail: string;
-    thumbnail: string;
-  };
-  industryIdentifiers: unknown;
-  infoLink: string;
-  language: string;
-  maturityRating: string;
-  pageCount: number;
-  panelizationSummary: { containsEpubBubbles: boolean; containsImageBubbles: boolean };
-  previewLink: string;
-  printType: string;
-  publishedDate: string;
-  publisher: string;
-  readingModes: { text: boolean; image: boolean };
-  subtitle: string;
-  title: string;
-}
-
-interface Book {
-  accessInfo: unknown;
-  etag: string;
-  id: string;
-  kind: string;
-  saleInfo: unknown;
-  searchInfo: unknown;
-  selfLink: string;
-  volumeInfo: Volume;
-}
+import BookItem from '../../components/BookItem.vue';
+import Book from '../../models/Book.model';
 
 interface State {
   books: Book[]
 }
 
-const state = reactive({
+const state: State = reactive({
   books: [],
 });
 
@@ -66,3 +35,8 @@ onBeforeMount(() => {
   getSuperHeroes();
 });
 </script>
+<style lang="sass">
+.books
+  display: flex
+  flex-wrap: wrap
+</style>

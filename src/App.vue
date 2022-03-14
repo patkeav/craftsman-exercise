@@ -15,6 +15,10 @@
   color: #2c3e50;
 }
 
+#app * {
+  box-sizing: border-box;
+}
+
 #nav {
   padding: 30px;
 
