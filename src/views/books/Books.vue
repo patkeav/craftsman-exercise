@@ -36,7 +36,7 @@
 <script setup lang="ts">
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
-import { onBeforeMount, reactive, computed } from 'vue';
+import { onBeforeMount, reactive } from 'vue';
 import gsap from 'gsap';
 import { useStore } from 'vuex';
 import API_KEY from '../../assets/api.key';
@@ -60,8 +60,6 @@ const state: State = reactive({
 });
 
 const store = useStore();
-
-const selected = store.getters['books/selectedBooks'];
 
 /**
  * Searches the Books API given the user's search input

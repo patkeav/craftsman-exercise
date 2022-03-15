@@ -18,7 +18,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import axios from 'axios';
 import { useStore } from 'vuex';
 import BookItem from '../../components/BookItem.vue';
 
