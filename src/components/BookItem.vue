@@ -1,10 +1,20 @@
 <template>
   <div class="book">
-      <h2 v-text="book.volumeInfo.title"></h2>
+    <div class="book__inner">
+      <img :src="book.volumeInfo.imageLinks.smallThumbnail" class="book__image" />
+
+      <div class="book__info">
+        <h2 v-text="book.volumeInfo.title"></h2>
+        <div v-text="`by ${formatAuthors(book.volumeInfo.authors)}`" v-if="book.volumeInfo.authors"></div>
+        <div class="book__additional">
+          <h4 v-text="`Published by ${book.volumeInfo.publisher}`"></h4>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
-import Vue, { PropType } from 'vue';
+import { PropType } from 'vue';
 import Book from '../models/Book.model';
 
 export default {
@@ -13,16 +23,30 @@ export default {
       type: Object as PropType<Book>,
     },
   },
+  methods: {
+    formatAuthors(authors: string[]): string {
+      console.log(authors);
+      return authors ? authors.join(', ') : '';
+    },
+  },
 };
 </script>
 <style lang="sass" scoped>
 .book
   width: 100%
-  padding: 0 12px 24px
+  background-color: #fff
+  box-shadow: 0 6px 6px -3px rgba(0,0,0,.2),0 10px 14px 1px rgba(0,0,0,.14),0 4px 18px 3px rgba(0,0,0,.12)
 
   &__inner
-      border: 1px solid #ccc
+    display: flex
+    align-items: flex-start
+    justify-content: space-between
 
-  @media (min-width: 960px)
-    width: percentage(1/3)
+  &__info
+    padding: 0 12px
+  &__additional
+    margin-top: auto
+  &__image
+    width: 128px
+    height: 232px
 </style>
