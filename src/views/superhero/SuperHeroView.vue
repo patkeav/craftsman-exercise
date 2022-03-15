@@ -43,7 +43,7 @@ onBeforeMount(() => {
 
 .books-item
   padding: 0 12px 24px
-  width: percentage(1/3)
+  width: 100%
   @media (min-width: 960px)
     width: percentage(1/3)
 </style>
