@@ -8,12 +8,20 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: '/superhero',
-    name: 'Superhero',
+    path: '/books',
+    name: 'Books',
     // route level code-splitting
     // this generates a separate chunk (superhero.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "superhero" */ '@/views/superhero/SuperHeroView.vue'),
+    component: () => import(/* webpackChunkName: "superhero" */ '../views/books/Books.vue'),
+  },
+  {
+    path: '/selected-books',
+    name: 'Selected',
+    // route level code-splitting
+    // this generates a separate chunk (superhero.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "superhero" */ '../views/books/SelectedBooks.vue'),
   },
 ];
 

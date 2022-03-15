@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-   <h1>Step into the world of one Stephen King...</h1>
+    <h1>Step into the world of one Stephen King...</h1>
   </div>
   <router-view />
 </template>
@@ -27,18 +27,12 @@ h1 {
   color: #fff
 }
 
-#nav {
-  padding: 30px;
-
-  a {
+a {
     font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+    color: #eaa29e;
+    text-decoration: none;
 }
+
 img {
   max-width: 100%;
   display: block;
@@ -57,6 +51,7 @@ img {
   padding: 15px;
   position: relative;
   cursor: pointer;
+  text-decoration: none;
   &--arrow::after {
     content: '';
     transform: translateY(0);

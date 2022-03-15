@@ -1,17 +1,16 @@
 <template>
   <div class="wrapper">
     <input
-        type="text"
-        v-model="state.search"
-        class="books__search"
-        placeholder="Search for a specific horror"
-        @input="searchBooks"
-      />
-      <button value="See Books" class="button">See Selected Books</button>
-    <template v-if="state.loading">  <div class="loader"></div> </template>
-    <template v-if="error"> We're sorry, but something went wrong. </template>
+      type="text"
+      v-model="state.search"
+      class="books__search"
+      placeholder="Search for a specific horror"
+      @input="searchBooks"
+    />
+    <router-link :to="{ name: 'Selected' }" class="button">See Selected Books</router-link>
+    <template v-if="state.loading"> <div class="loader"></div> </template>
+    <template v-if="state.error"> We're sorry, but something went wrong. </template>
     <template v-if="!state.loading">
-
       <TransitionGroup
         name="fade"
         tag="div"
