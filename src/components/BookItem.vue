@@ -1,13 +1,13 @@
 <template>
   <div class="book">
     <div class="book__inner">
-      <img :src="book.volumeInfo.imageLinks.smallThumbnail" class="book__image" />
+      <img :src="book.volumeInfo.imageLinks?.smallThumbnail" class="book__image" />
 
       <div class="book__info">
-        <h2 v-text="book.volumeInfo.title"></h2>
+        <h2 v-text="ellipses(book.volumeInfo.title)"></h2>
         <div v-text="`by ${formatAuthors(book.volumeInfo.authors)}`" v-if="book.volumeInfo.authors"></div>
         <div class="book__additional">
-          <h4 v-text="`Published by ${book.volumeInfo.publisher}`"></h4>
+          <h4 v-text="`Published by ${book.volumeInfo.publisher}`" v-if="book.volumeInfo.publisher"></h4>
         </div>
       </div>
     </div>
@@ -25,8 +25,10 @@ export default {
   },
   methods: {
     formatAuthors(authors: string[]): string {
-      console.log(authors);
       return authors ? authors.join(', ') : '';
+    },
+    ellipses(title: string): string {
+      return `${title.substring(0, 15)} ...`;
     },
   },
 };
