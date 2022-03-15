@@ -7,22 +7,27 @@
       placeholder="Type something to search!"
       @input="searchBooks"
     />
-    <template v-if="state.books.length > 0">
-      <div class="books">
-        <div v-for="book in state.books" :key="book.id" class="books__item">
-          <BookItem :book="book" />
+      <TransitionGroup
+        name="fade"
+        tag="div"
+        class="books"
+        :css="false"
+        @before-enter="onBeforeEnter"
+        @enter="onEnter"
+        @leave="onLeave"
+      >
+        <div v-for="book in state.books" :key="book.id" class="books__item" >
+          <BookItem :book="book"  />
         </div>
-      </div>
-      <input type="button" value="Load More" @click="loadMore()">
-    </template>
-    <template v-else>
-      <h4>We're sorry, but we could not find any books with the title <span v-text="state.search"></span>.</h4>
-    </template>
+      </TransitionGroup>
+      <button value="Load More" @click="loadMore()" class="button">Load More</button>
   </div>
 </template>
 <script setup lang="ts">
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { onBeforeMount, reactive, computed } from 'vue';
+import gsap from 'gsap';
 import API_KEY from '../../assets/api.key';
 import BookItem from '../../components/BookItem.vue';
 import Book from '../../models/Book.model';
@@ -43,7 +48,7 @@ async function searchBooks() {
   try {
     console.log(state.search);
     const response = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=${state.search}&inauthor:stephen king&key=${API_KEY}`,
+      `https://www.googleapis.com/books/v1/volumes?q=${state.search}+inauthor:stephen king&key=${API_KEY}`,
     );
     state.books = response.data.items;
   } catch (error) {
@@ -57,11 +62,29 @@ async function getBooks() {
       `https://www.googleapis.com/books/v1/volumes?q=inauthor:stephen king&key=${API_KEY}&startIndex=${state.pageNum}`,
     );
     state.books = [...state.books, ...response.data.items];
-
-    console.log(response.data.items);
   } catch (error) {
     console.error(error);
   }
+}
+
+function onBeforeEnter(el) {
+  el.style.opacity = 0;
+  el.style.transform = 'translateX(-5px)';
+}
+function onEnter(el, done) {
+  console.log(el.dataset);
+  gsap.to(el, {
+    opacity: 1,
+    translateX: 0,
+    onComplete: done,
+  });
+}
+function onLeave(el, done) {
+  gsap.to(el, {
+    opacity: 0,
+    translateX: -5,
+    onComplete: done,
+  });
 }
 
 function loadMore() {
@@ -92,4 +115,12 @@ onBeforeMount(() => {
   padding: 15px
   font-size: 16px
   width: 350px
+
+.fade-enter-active,
+.fade-leave-active
+  transition: opacity .5s
+
+.fade-enter,
+.fade-leave-to
+  opacity: 0
 </style>
