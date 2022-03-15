@@ -38,8 +38,10 @@ const selected = store.getters['books/selectedBooks'];
     flex-wrap: wrap
     align-items: center
     justify-content: center
-    padding: 50px
+    padding: 20px
     &__book
-       width: 50%
+       width: 100%
        margin: 15px
+       @media (min-width: 960px)
+        width: 50%
 </style>

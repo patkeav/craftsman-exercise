@@ -7,8 +7,8 @@
       placeholder="Search for a specific horror"
       @input="searchBooks"
     />
-    <router-link :to="{ name: 'Selected' }" class="button">See Selected Books</router-link>
-    <template v-if="state.loading"> <div class="loader"></div> </template>
+    <router-link :to="{ name: 'Selected' }" class="button select-button">See Selected Books</router-link>
+    <template v-if="state.loading"> <div class="loader" id="pageLoader"></div> </template>
     <template v-if="state.error"> We're sorry, but something went wrong. </template>
     <template v-if="!state.loading">
       <TransitionGroup
@@ -63,6 +63,12 @@ const store = useStore();
 
 const selected = store.getters['books/selectedBooks'];
 
+/**
+ * Searches the Books API given the user's search input
+ *
+ * Template Function - invoked from HTML
+ * @memberof Books
+ */
 async function searchBooks() {
   state.loading = true;
   try {
@@ -79,6 +85,12 @@ async function searchBooks() {
   }
 }
 
+/**
+ * Searches the Books API given the user's search input
+ *
+ * Template Function - invoked from HTML
+ * @memberof Books
+ */
 async function getBooks() {
   try {
     const response = await axios.get(
@@ -94,14 +106,30 @@ async function getBooks() {
   }
 }
 
+/**
+ * Searches the Books API given the user's search input
+ *
+ * Template Function - invoked from HTML
+ * @memberof Books
+ */
 function toggleBook(book: Book) {
   store.dispatch('books/addOrRemoveBook', book);
 }
-
+/**
+ * GSAP Trigger for just before the element is added to the DOM
+ *
+ * @memberof Books
+ */
 function onBeforeEnter(el) {
   el.style.opacity = 0;
   el.style.transform = 'translateX(-5px)';
 }
+
+/**
+ * GSAP Trigger for when the element is added from the DOM
+ *
+ * @memberof Books
+ */
 function onEnter(el, done) {
   gsap.to(el, {
     opacity: 1,
@@ -109,6 +137,12 @@ function onEnter(el, done) {
     onComplete: done,
   });
 }
+
+/**
+ * GSAP Trigger for when the element is removed from the DOM
+ *
+ * @memberof Books
+ */
 function onLeave(el, done) {
   gsap.to(el, {
     opacity: 0,
@@ -117,11 +151,23 @@ function onLeave(el, done) {
   });
 }
 
+/**
+ * Increments the page number and re-gets the books from the API with new page num
+ *
+ * Template Function - invoked from HTML
+ * @memberof Books
+ */
 function loadMore() {
   state.pageNum += 10;
   getBooks();
 }
 
+/**
+ * Vue Lifecycle hook
+ *
+ * Before the HTML is rendered, get the list of books from the API
+ * @memberof Books
+ */
 onBeforeMount(() => {
   getBooks();
 });
@@ -157,6 +203,12 @@ $color: #830c06
     margin-bottom: 5px
     &--wrap
       margin: 10px 0
+
+.select-button
+  display: block
+  margin: 15px auto
+  @media (min-width: 960px)
+    display: inline
 
 .fade-enter-active,
 .fade-leave-active
