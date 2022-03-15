@@ -1,11 +1,16 @@
 <template>
   <div id="nav">
-   <h1>Search Stephen King Books!</h1>
+   <h1>Step into the world of one Stephen King...</h1>
   </div>
   <router-view />
 </template>
 
 <style lang="scss">
+body {
+  margin: 0;
+  background-color: #454545;
+
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,6 +21,10 @@
 
 #app * {
   box-sizing: border-box;
+}
+
+h1 {
+  color: #fff
 }
 
 #nav {
@@ -37,7 +46,7 @@ img {
 
 .button {
   width: 250px;
-  background-color: cornflowerblue;
+  background-color: #830c06;
   color: #fff;
   border-radius: 5px;
   appearance: none;
@@ -48,7 +57,7 @@ img {
   padding: 15px;
   position: relative;
   cursor: pointer;
-  &:after {
+  &--arrow::after {
     content: '';
     transform: translateY(0);
     border: 10px solid transparent;
@@ -59,7 +68,7 @@ img {
     right: 50px;
     margin: auto;
   }
-  &:hover::after {
+  &--arrow:hover::after {
     top: 25px;
     transition: top 250ms;
   }
